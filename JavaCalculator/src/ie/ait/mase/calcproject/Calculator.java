@@ -1,5 +1,6 @@
 package ie.ait.mase.calcproject;
 
+import java.math.BigDecimal;
 import java.util.Queue;
 
 public class Calculator {
@@ -32,7 +33,18 @@ public class Calculator {
 	
 	// Calculate an subtraction
 	public double subtract(double num1, double num2) {
-		return num1 - num2;
+		BigDecimal num1Bg = new BigDecimal(Double.toString(num1));
+		BigDecimal num2Bg = new BigDecimal(Double.toString(num2));
+		
+		return num1Bg.subtract(num2Bg).doubleValue();
+	}
+
+	public double Multiply(Double num1, Double num2) {
+		return num1 * num2;
+	}
+
+	public double Divide(Double num1, Double num2) {
+		return num1 / num2;
 	}
 
 }

@@ -9,7 +9,8 @@ public class ReversePolishParser {
 	private Stack<String> numberStack = new Stack<String>();
 	
 	// Operation Constants
-	private final char PLUS = '+', SUBTRACTION = '-'; // add more as add functionality
+	private final char PLUS = '+', SUBTRACTION = '-', MULTIPLICATION = '*', 
+			DIVISION='/'; // add more as add functionality
 	
 	// Constructor
 	public ReversePolishParser(Calculator calc) {
@@ -34,7 +35,7 @@ public class ReversePolishParser {
 				
 				// calculate result
 				numberStack.add(String.valueOf(calculateResult(num1, num2, nextToken)));
-				//numberStack.add(String.valueOf(Integer.parseInt(num1) + Integer.parseInt(num2)));
+				
 			}
 		}
 		
@@ -54,6 +55,12 @@ public class ReversePolishParser {
 		case SUBTRACTION:
 			result = calc.subtract(Double.valueOf(num1), Double.valueOf(num2));
 			break;
+		case MULTIPLICATION:
+			result = calc.Multiply(Double.valueOf(num1), Double.valueOf(num2));
+			break;
+		case DIVISION:
+			result = calc.Divide(Double.valueOf(num1), Double.valueOf(num2));
+			break;
 		default:
 			System.out.println("This operation has not yet been implemented: " + nextToken);
 			break;
@@ -71,7 +78,7 @@ public class ReversePolishParser {
 		default:
 			result = false;
 			break;
-		case PLUS: case SUBTRACTION:
+		case PLUS: case SUBTRACTION: case MULTIPLICATION: case DIVISION:
 			result = true;
 			break;
 		}

@@ -28,5 +28,29 @@ public class CalculatorTest {
 	public void testSimpleSubtraction() {
 		assertEquals("-2.0", calc.calculate("3-5"));
 	}
+	
+	public void testSimpleMultiplication() {
+		assertEquals("6.0", calc.calculate("4*3"));
+	}
+	
+	@Test
+	public void testSimpleAdditionWithSpaces() {
+		assertEquals("8.0", calc.calculate("3 + 5"));
+	}
+	
+	@Test
+	public void testSimpleAdditionWithParentheses() {
+		assertEquals("15.0", calc.calculate("3 + (10 + 2)"));
+	}
+	
+	@Test
+	public void testSimpleAdditionAndSubtractionWithParentheses() {
+		assertEquals("4.0", calc.calculate("3 + (5 - 4)"));
+	}
+	
+	@Test
+	public void testAdvancedAdditionAndSubtractionWithParentheses() {
+		assertEquals("8.0", calc.calculate("3 + (5 - 4) + (5-1)"));
+	}
 
 }

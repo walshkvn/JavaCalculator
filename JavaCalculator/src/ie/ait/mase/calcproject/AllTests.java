@@ -7,6 +7,6 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({ CalculatorParserTest.class, CalculatorTest.class,
 		ReversePolishParserTest.class })
-public class AllTests {
+public class AllTests { 
 
 }

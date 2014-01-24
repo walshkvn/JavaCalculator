@@ -8,14 +8,15 @@ import java.util.Queue;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ReversePolishCalculatorTest {
+public class ReversePolishParserTest {
 	
-	ReversePolishCalculator rpCalc;
+	ReversePolishParser rpParser;
 	Queue<String> problem;
 	
 	@Before
 	public void setUp() throws Exception {
-		rpCalc = new ReversePolishCalculator();
+		Calculator calc = new Calculator();
+		rpParser = new ReversePolishParser(calc);
 		problem = new LinkedList<>();
 	}
 
@@ -24,7 +25,15 @@ public class ReversePolishCalculatorTest {
 		problem.add("3");
 		problem.add("5");
 		problem.add("+");
-		assertEquals("8", rpCalc.calcProblem(problem));
+		assertEquals("8.0", rpParser.calcProblem(problem));
+	}
+	
+	@Test
+	public void testSimpleSubtraction() {
+		problem.add("3");
+		problem.add("5");
+		problem.add("-");
+		assertEquals("-2.0", rpParser.calcProblem(problem));
 	}
 
 }

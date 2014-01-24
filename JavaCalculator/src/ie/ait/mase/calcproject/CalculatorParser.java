@@ -22,7 +22,7 @@ public class CalculatorParser {
 			// if the token is a number save to the queue
 			if (nextToken >= ZERO && nextToken <= NINE) {
 				addToQueue(String.valueOf(nextToken));
-			} else if (nextToken == PLUS) {
+			} else if (isOperator(nextToken)) {
 				addToStack(String.valueOf(nextToken));
 			}
 			
@@ -37,6 +37,21 @@ public class CalculatorParser {
 		
 	}
 	
+	private boolean isOperator(char nextToken) {
+		boolean result = false;
+		
+		switch (nextToken) {
+		default: 
+			result = false;
+			break;
+		case PLUS: case MINUS:
+			result = true;
+			break;
+		}
+		
+		return result;
+	}
+
 	private void addToQueue(String nextElement) {
 		calcQueue.add(nextElement);
 	}

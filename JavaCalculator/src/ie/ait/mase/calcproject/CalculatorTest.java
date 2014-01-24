@@ -16,12 +16,17 @@ public class CalculatorTest {
 	
 	@Test
 	public void testSimpleAddition() {
-		assertEquals(8, calc.calculate("3+5"));
+		assertEquals("8.0", calc.calculate("3+5"));
 	}
 	
 	@Test
 	public void testSimpleAdditionII() {
-		assertEquals(10, calc.calculate("5+5"));
+		assertEquals("10.0", calc.calculate("5+5"));
+	}
+	
+	@Test
+	public void testSimpleSubtraction() {
+		assertEquals("-2.0", calc.calculate("3-5"));
 	}
 
 }

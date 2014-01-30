@@ -3,6 +3,7 @@ package ie.ait.mase.calcproject;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -77,6 +78,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		numberButtons = new JButton[10];
 		for (int i = 0; i < numberButtons.length; i++) {
 			numberButtons[i] = new JButton("" + i);
+			numberButtons[i].addActionListener(this);
 			
 			// position our buttons
 			calcGbc.gridx = numConstraints[i][0];
@@ -109,6 +111,8 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			calcGbc.gridheight = oppConstraints[i][3];
 			calcGbc.fill = GridBagConstraints.BOTH; // fill the whole grid area
 			calcGbc.insets = new Insets(BUTTON_PADDING, BUTTON_PADDING, BUTTON_PADDING, BUTTON_PADDING); // add some padding around buttons
+
+			oppButtons[i].addActionListener(this);
 			
 			// add the buttons
 			add(oppButtons[i], calcGbc);
@@ -117,6 +121,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		calcField = new JTextField();
 		calcField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		//calcField.setEditable(false);
+		calcField.setFont(new Font("Arial", Font.PLAIN, 24));
 		calcGbc.gridx=0;
 		calcGbc.gridy=0;
 		calcGbc.gridwidth=4;
@@ -125,8 +130,32 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		add(calcField, calcGbc);
 	}
 	
-	public void actionPerformed(ActionEvent args) {
-		calcField.setText("Yet to be implemented!");
+	public void actionPerformed(ActionEvent e) {
+		for (int i = 0; i < numberButtons.length; i++) {
+			if (e.getSource() == numberButtons[i]) {
+				calcField.setText(calcField.getText() + i);
+			}
+		}
+		
+		if(e.getSource() == oppButtons[0] && !calcField.getText().contains(".")) // decimal point button
+			calcField.setText(calcField.getText() + ".");
+		else if (e.getSource() == oppButtons[2]) // + Button
+			calcField.setText(calcField.getText() + "+");
+		else if (e.getSource() == oppButtons[3]) // + Button
+			calcField.setText(calcField.getText() + "-");
+		else if (e.getSource() == oppButtons[4]) // * Button
+			calcField.setText(calcField.getText() + "*");
+		else if (e.getSource() == oppButtons[5]) // + Button
+			calcField.setText(calcField.getText() + "/");
+		else if (e.getSource() == oppButtons[6]) { // +/- Button
+			// TODO Need get the last number entered.
+			
+			calcField.setText("" + Integer.parseInt(calcField.getText())*-1);
+		} else if (e.getSource() == oppButtons[7]) // CLR Button
+			calcField.setText("");
+		else if (e.getSource() == oppButtons[7]) { // = Button
+			// TODO Need to call the calculator to generate the result
+		}
 	}
 	
 	public static void main(String[] args) {

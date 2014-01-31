@@ -56,10 +56,10 @@ public class ReversePolishParser {
 			result = calc.subtract(Double.valueOf(num1), Double.valueOf(num2));
 			break;
 		case MULTIPLICATION:
-			result = calc.Multiply(Double.valueOf(num1), Double.valueOf(num2));
+			result = calc.multiply(Double.valueOf(num1), Double.valueOf(num2));
 			break;
 		case DIVISION:
-			result = calc.Divide(Double.valueOf(num1), Double.valueOf(num2));
+			result = calc.divide(Double.valueOf(num1), Double.valueOf(num2));
 			break;
 		default:
 			System.out.println("This operation has not yet been implemented: " + nextToken);

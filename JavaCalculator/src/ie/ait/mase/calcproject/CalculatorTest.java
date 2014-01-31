@@ -53,4 +53,9 @@ public class CalculatorTest {
 		assertEquals("8.0", calc.calculate("3 + (5 - 4) + (5-1)"));
 	}
 
+	@Test
+	public void testAdvancedAdditionAndSubtractionWithoutParentheses() {
+		assertEquals("4.0", calc.calculate("3 + 5 - 4"));
+	}
+	
 }

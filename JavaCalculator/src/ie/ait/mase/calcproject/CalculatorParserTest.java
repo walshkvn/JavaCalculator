@@ -149,6 +149,25 @@ public class CalculatorParserTest {
 		
 	}
 	
+	@Test
+	public void testAdditionandSubtractionWithoutParentheses() {
+		result = parser.parse("3+5-4");
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("3", getElementAtIndex(0));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("5", getElementAtIndex(1));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("4", getElementAtIndex(2));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("-", getElementAtIndex(3));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("+", getElementAtIndex(4));
+	}
+	
 	
 	// other methods:
 	private String getElementAtIndex(int index) {

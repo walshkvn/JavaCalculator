@@ -39,12 +39,16 @@ public class Calculator {
 		return num1Bg.subtract(num2Bg).doubleValue();
 	}
 
-	public double Multiply(Double num1, Double num2) {
+	public double multiply(Double num1, Double num2) {
 		return num1 * num2;
 	}
 
-	public double Divide(Double num1, Double num2) {
+	public double divide(Double num1, Double num2) {
 		return num1 / num2;
+	}
+	
+	public double calcCos(Double num1) {
+		return Math.cos(num1);
 	}
 
 }

@@ -66,7 +66,8 @@ public class CalculatorParser {
 					
 		
 		// Put the elements from the stack into the queue in the correct order
-		for (int i = 0; i < calcStack.size(); i++) {
+		int stackSize = calcStack.size();
+		for (int i = 0; i < stackSize; i++) {
 			addToQueue(calcStack.pop());
 		}
 		

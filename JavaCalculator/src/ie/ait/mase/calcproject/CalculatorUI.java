@@ -131,6 +131,8 @@ public class CalculatorUI extends JPanel implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		Calculator calc = new Calculator();
+		
 		for (int i = 0; i < numberButtons.length; i++) {
 			if (e.getSource() == numberButtons[i]) {
 				calcField.setText(calcField.getText() + i);
@@ -153,8 +155,8 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			calcField.setText("" + Integer.parseInt(calcField.getText())*-1);
 		} else if (e.getSource() == oppButtons[7]) // CLR Button
 			calcField.setText("");
-		else if (e.getSource() == oppButtons[7]) { // = Button
-			// TODO Need to call the calculator to generate the result
+		else if (e.getSource() == oppButtons[1]) { // = Button
+			calcField.setText(calc.calculate(calcField.getText()));
 		}
 	}
 	

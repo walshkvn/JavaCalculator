@@ -149,6 +149,11 @@ public class CalculatorParserTest {
 		
 	}
 	
+	@Test
+	public void testMultiplicationOverAdditionPrisorisation() {
+		
+	}
+	
 	
 	// other methods:
 	private String getElementAtIndex(int index) {

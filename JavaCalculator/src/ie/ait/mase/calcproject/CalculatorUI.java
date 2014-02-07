@@ -21,6 +21,7 @@ import javax.swing.WindowConstants;
 
 public class CalculatorUI extends JPanel implements ActionListener{
 
+	// testing a change
 	private static final long serialVersionUID = 1L;
 	public static final int WIDTH = 400, HEIGHT = 480, NUM_OF_COLUMNS = 5, 
 			NUM_OF_ROWS = 7, BUTTON_PADDING = 2;
@@ -226,7 +227,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			calcField.setText(calc.calculate(calcField.getText()));
 			
 			JFrame chartFrame = new JFrame("Calculator Chart");
-			chartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // close the window the program terminates
+			chartFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); // close the window the program terminates
 			chartFrame.setResizable(true);
 			chartFrame.setLayout(new BorderLayout()); // allows to center on screen
 			chartFrame.add(new CalculatorChart(), BorderLayout.CENTER);

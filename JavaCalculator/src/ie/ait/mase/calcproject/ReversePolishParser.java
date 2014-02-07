@@ -30,8 +30,12 @@ public class ReversePolishParser {
 			if (!isOperator(nextToken))
 				numberStack.add(nextToken);
 			else {
+				// if operation requires two numbers:
+				// if(isFuntion())
 				String num2 = numberStack.pop();
 				String num1 = numberStack.pop();
+				// else
+				// take one number
 				
 				// calculate result
 				numberStack.add(String.valueOf(calculateResult(num1, num2, nextToken)));

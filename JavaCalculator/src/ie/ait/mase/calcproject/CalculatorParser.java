@@ -6,7 +6,7 @@ import java.util.Stack;
 
 public class CalculatorParser {
 	
-	private final char ZERO = 47, NINE = 57, PLUS = '+', MINUS = '-', DOT = '.',
+	private final char ZERO = 48, NINE = 57, PLUS = '+', MINUS = '-', DOT = '.',
 			MULTIPLY='*', DIVIDE='/', LEFT_BRACKET='(', RIGHT_BRACKET=')'; // add more as more functionality added
 	
 	private Queue<String> calcQueue = new LinkedList<String>();

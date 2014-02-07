@@ -21,7 +21,7 @@ import javax.swing.WindowConstants;
 
 public class CalculatorUI extends JPanel implements ActionListener{
 
-	// testing a change
+	// testing a changes
 	private static final long serialVersionUID = 1L;
 	public static final int WIDTH = 400, HEIGHT = 480, NUM_OF_COLUMNS = 5, 
 			NUM_OF_ROWS = 7, BUTTON_PADDING = 2;

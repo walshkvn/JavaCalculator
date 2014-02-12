@@ -23,7 +23,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	public static final int WIDTH = 400, HEIGHT = 480, NUM_OF_COLUMNS = 5, 
-			NUM_OF_ROWS = 7, BUTTON_PADDING = 2;
+			NUM_OF_ROWS = 8, BUTTON_PADDING = 2;
 	private final char ZERO = 47, NINE = 57, MINUS = '-';
 
 	private GridBagLayout calcLayout;
@@ -38,37 +38,37 @@ public class CalculatorUI extends JPanel implements ActionListener{
 	// button positioning
 	// [0] = gridx, [1] = gridy, [2] = gridwidth, [3] = gridheight[]
 	private int[][] numConstraints = new int [][] {
-			{0, 6, 2, 1},
+			{0, 7, 2, 1},
+			{0, 6, 1, 1},
+			{1, 6, 1, 1},
+			{2, 6, 1, 1},
 			{0, 5, 1, 1},
 			{1, 5, 1, 1},
 			{2, 5, 1, 1},
 			{0, 4, 1, 1},
 			{1, 4, 1, 1},
-			{2, 4, 1, 1},
-			{0, 3, 1, 1},
-			{1, 3, 1, 1},
-			{2, 3, 1, 1}
+			{2, 4, 1, 1}
 	};
 
 	private int[][] oppConstraints = new int [][] {
-			{2, 6, 1, 1}, //.
-			{4, 5, 1, 2}, // =
-			{3, 4, 1, 1}, // + 
-			{4, 4, 1, 1}, // - 
-			{3, 3, 1, 1}, // *
-			{4, 3, 1, 1}, // /
-			{1, 1, 1, 1}, // (
-			{0, 1, 1, 1}, // )
-			{3, 6, 1, 1}, // +/-
-			{3, 5, 1, 1}, // CLR
-			{2, 2, 1, 1}, // sin
-			{3, 2, 1, 1}, // cos
-			{4, 2, 1, 1}, // tan
-			{0, 2, 1, 1}, // sqr root
-			{1, 2, 1, 1}, // power
-			{2, 1, 1, 1}, // ln
-			{3, 1, 1, 1}, // log
-			{4, 1, 1, 1} // exp
+			{2, 7, 1, 1}, //.
+			{4, 6, 1, 2}, // =
+			{3, 5, 1, 1}, // + 
+			{4, 5, 1, 1}, // - 
+			{3, 4, 1, 1}, // *
+			{4, 4, 1, 1}, // /
+			{1, 2, 1, 1}, // (
+			{0, 2, 1, 1}, // )
+			{3, 7, 1, 1}, // +/-
+			{3, 6, 1, 1}, // CLR
+			{2, 3, 1, 1}, // sin
+			{3, 3, 1, 1}, // cos
+			{4, 3, 1, 1}, // tan
+			{0, 3, 1, 1}, // sqr root
+			{1, 3, 1, 1}, // power
+			{2, 2, 1, 1}, // ln
+			{3, 2, 1, 1}, // log
+			{4, 2, 1, 1} // exp
 	};
 
 	// Constructor
@@ -232,7 +232,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			calcField.setText(calc.calculate(calcField.getText()));
 
 			JFrame chartFrame = new JFrame("Calculator Chart");
-			chartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // close the window the program terminates
+			chartFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); // close the window the program terminates
 			chartFrame.setResizable(true);
 			chartFrame.setLayout(new BorderLayout()); // allows to center on screen
 			//chartFrame.add(new CalculatorChart(), BorderLayout.CENTER);
@@ -254,7 +254,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 
 	public static void main(String[] args) {
 		JFrame calcFrame = new JFrame("Calculator");
-		calcFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); // close the window the program terminates
+		calcFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // close the window the program terminates
 		calcFrame.setResizable(false);
 		calcFrame.setLayout(new BorderLayout()); // allows to center on screen
 		calcFrame.add(new CalculatorUI(), BorderLayout.CENTER);

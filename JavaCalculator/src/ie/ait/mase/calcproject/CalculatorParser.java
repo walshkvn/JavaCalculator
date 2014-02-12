@@ -7,7 +7,7 @@ import java.util.Stack;
 public class CalculatorParser {
 	private final char ZERO = 48, NINE = 57, PLUS = '+', MINUS = '-',
 			DOT = '.', MULTIPLY = '*', DIVIDE = '/', LEFT_BRACKET = '(',
-			RIGHT_BRACKET = ')', POWER = '^', ROOT = '\u221A'; // add more as more functionality
+			RIGHT_BRACKET = ')', POWER = '^', ROOT = '√'; // add more as more functionality
 												// added
 
 	private Queue<String> calcQueue = new LinkedList<String>();
@@ -35,14 +35,14 @@ public class CalculatorParser {
 			if ((nextToken >= ZERO && nextToken <= NINE) || nextToken == DOT) {
 				// add the nextToken to the temp number holder: nextNumber
 				nextNumber += nextToken;
-
-				if (i >= nextNumber.length()) {
-					if (calcToParse.charAt((i - nextNumber.length())) == MULTIPLY
-							|| calcToParse.charAt((i - nextNumber.length())) == DIVIDE
-							|| calcToParse.charAt((i - nextNumber.length())) == POWER
-							|| calcToParse.charAt((i - nextNumber.length())) == ROOT)
-						precedence = true;
-				}
+//
+//				if (i >= nextNumber.length()) {
+//					if (calcStack.peek().equals(String.valueOf(MULTIPLY))
+//							|| calcStack.peek().equals(String.valueOf(DIVIDE))
+//							|| calcStack.peek().equals(String.valueOf(POWER))
+//							|| calcStack.peek().equals(String.valueOf(ROOT)))
+//						precedence = true;
+//				}
 
 			} else if (isOperator(nextToken)) {
 				//checks if first thing in string is an operator. or if a negative operator immediately follows a left bracket 
@@ -50,17 +50,31 @@ public class CalculatorParser {
 					nextNumber+=nextToken;
 					break breakLoop;
 				}
+				
+				// put the nextNumber to the Queue as we have finished reading in numbers
 				if (!nextNumber.equalsIgnoreCase("")) {
 					addToQueue(String.valueOf(nextNumber));
 
 					nextNumber = ""; // reset for the next number
 				}
+				
+				if (!calcStack.isEmpty()) {
+					switch (calcStack.peek()) {
+					case "^": case "√":
+						precedence = true;
+					case "*": case "/":
+						if (nextToken == '+' || nextToken == '-') {
+							precedence = true;
+						}
+					}
+				}
+				
 				if (!calcStack.isEmpty() && (precedence && !calcStack.peek().equals("("))) {
 					// adds high precedence operands to queue
 					addToQueue(calcStack.pop()); // emptys queue if the next
 													// operator is a minus or
 													// plus
-					precedence = false;
+					precedence = false; // reset precedence
 					if (nextToken == MINUS || nextToken == PLUS) {
 						emptyStack();
 					}
@@ -93,11 +107,9 @@ public class CalculatorParser {
 						&& !calcStack.peek().equalsIgnoreCase("(")) {
 					addToQueue(calcStack.pop());
 				}
-				calcStack.pop(); // need to get rid of the left parentheses
-				if (!calcStack.isEmpty())
-					addToQueue(calcStack.pop()); // add the operator associated
-													// with the parentheses
-				precedence = false;
+				if(!calcStack.isEmpty())
+					calcStack.pop(); // need to get rid of the left parentheses
+				
 			} else if ((nextToken < ZERO || nextToken > NINE)
 					&& (nextToken != MULTIPLY || nextToken != MINUS
 							|| nextToken != PLUS || nextToken != DIVIDE)) {

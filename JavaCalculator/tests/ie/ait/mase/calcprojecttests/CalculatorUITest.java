@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CaclulatorUITest {
+public class CalculatorUITest {
 
 	CalculatorUI uiCalc;
 	JTextField field;

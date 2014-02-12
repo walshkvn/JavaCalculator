@@ -21,21 +21,20 @@ import javax.swing.WindowConstants;
 
 public class CalculatorUI extends JPanel implements ActionListener{
 
-	// testing a changes
 	private static final long serialVersionUID = 1L;
 	public static final int WIDTH = 400, HEIGHT = 480, NUM_OF_COLUMNS = 5, 
 			NUM_OF_ROWS = 7, BUTTON_PADDING = 2;
 	private final char ZERO = 47, NINE = 57, MINUS = '-';
-	
+
 	private GridBagLayout calcLayout;
 	private GridBagConstraints calcGbc; // allows us to position the buttons
-	
+
 	// Array for our number Buttons
 	private JButton[] numberButtons;
 	private JButton[] oppButtons;
-	
+
 	private JTextField calcField;
-	
+
 	// button positioning
 	// [0] = gridx, [1] = gridy, [2] = gridwidth, [3] = gridheight[]
 	private int[][] numConstraints = new int [][] {
@@ -50,7 +49,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			{1, 3, 1, 1},
 			{2, 3, 1, 1}
 	};
-	
+
 	private int[][] oppConstraints = new int [][] {
 			{2, 6, 1, 1}, //.
 			{4, 5, 1, 2}, // =
@@ -71,12 +70,12 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			{3, 1, 1, 1}, // log
 			{4, 1, 1, 1} // exp
 	};
-	
+
 	// Constructor
 	public CalculatorUI () {
 		// set the size of the JPanel
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		
+
 		// set up our grid for our buttons
 		calcLayout = new GridBagLayout();
 		int width =  (WIDTH/NUM_OF_COLUMNS) - (BUTTON_PADDING*2);
@@ -84,17 +83,17 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		calcLayout.rowHeights = new int[] {HEIGHT/NUM_OF_ROWS, HEIGHT/NUM_OF_ROWS, HEIGHT/NUM_OF_ROWS, 
 				HEIGHT/NUM_OF_ROWS, HEIGHT/NUM_OF_ROWS, HEIGHT/NUM_OF_ROWS, HEIGHT/NUM_OF_ROWS};
 		setLayout(calcLayout);
-		
+
 		// place the buttons
 		calcGbc = new GridBagConstraints();
-		
+
 		// create our number buttons
 		numberButtons = new JButton[10];
 		for (int i = 0; i < numberButtons.length; i++) {
 			numberButtons[i] = new JButton("" + i);
 			numberButtons[i].addActionListener(this);
 			numberButtons[i].setName("" + i);
-			
+
 			// position our buttons
 			calcGbc.gridx = numConstraints[i][0];
 			calcGbc.gridy = numConstraints[i][1];
@@ -102,11 +101,11 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			calcGbc.gridheight = numConstraints[i][3];
 			calcGbc.fill = GridBagConstraints.BOTH; // fill the whole grid area
 			calcGbc.insets = new Insets(BUTTON_PADDING, BUTTON_PADDING, BUTTON_PADDING, BUTTON_PADDING); // add some padding around buttons
-			
+
 			// add the buttons
 			add(numberButtons[i], calcGbc);
 		}
-		
+
 		// create the operation buttons:
 		oppButtons = new JButton[18];
 		oppButtons[0] = new JButton("."); oppButtons[0].setName(".");
@@ -127,8 +126,8 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		oppButtons[15] = new JButton("ln"); oppButtons[15].setName("ln");
 		oppButtons[16] = new JButton("log"); oppButtons[16].setName("log");
 		oppButtons[17] = new JButton("exp"); oppButtons[17].setName("exp");
-		
-		
+
+
 		// position the buttons
 		for (int i = 0; i < oppButtons.length; i++) {
 			calcGbc.gridx = oppConstraints[i][0];
@@ -139,11 +138,11 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			calcGbc.insets = new Insets(BUTTON_PADDING, BUTTON_PADDING, BUTTON_PADDING, BUTTON_PADDING); // add some padding around buttons
 
 			oppButtons[i].addActionListener(this);
-			
+
 			// add the buttons
 			add(oppButtons[i], calcGbc);
 		}
-		
+
 		calcField = new JTextField();
 		calcField.setName("display");
 		calcField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -153,19 +152,19 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		calcGbc.gridy=0;
 		calcGbc.gridwidth=5;
 		calcGbc.gridheight=1;
-		
+
 		add(calcField, calcGbc);
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		Calculator calc = new Calculator();
-		
+
 		for (int i = 0; i < numberButtons.length; i++) {
 			if (e.getSource() == numberButtons[i]) {
 				calcField.setText(calcField.getText() + i);
 			} 
 		} 
-		
+
 		if(e.getSource() == oppButtons[0] && !calcField.getText().contains(".")) // decimal point button
 			calcField.setText(calcField.getText() + ".");
 		else if (e.getSource() == oppButtons[2]) { 			// + Button
@@ -187,12 +186,18 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		} else if (e.getSource() == oppButtons[12]) {		// tan Button
 			calcField.setText(calcField.getText() + "tan(");
 		} else if (e.getSource() == oppButtons[13]) {		// root Button	
-			
+
 			String rootMultipler = (String)JOptionPane.showInputDialog("Enter the root multipler (2=squared, 3=cubed, etc):", 2 );
 			calcField.setText(calcField.getText() + "(" + rootMultipler + "\u221A");
-			
+
 		} else if (e.getSource() == oppButtons[14]) {		// power Button
 			calcField.setText(calcField.getText() + "^");
+		} else if (e.getSource() == oppButtons[15]) {		// tan Button
+			calcField.setText(calcField.getText() + "ln(");
+		} else if (e.getSource() == oppButtons[16]) {		// tan Button
+			calcField.setText(calcField.getText() + "log(");
+		} else if (e.getSource() == oppButtons[17]) {		// tan Button
+			calcField.setText(calcField.getText() + "exp(");
 		} else if (e.getSource() == oppButtons[8]) { 			// +/- Button
 			// check if the last item entered is a number
 			StringBuffer lastNumberEntered = new StringBuffer();
@@ -212,33 +217,34 @@ public class CalculatorUI extends JPanel implements ActionListener{
 				} else
 					break; // break out of the for loop as we now have all the information we need
 			}
-			
+
 			// if nextChar is still MINUS then the number is negative and we need to make it positive
 			if (nextChar == MINUS)
 				calcField.setText(replaceLastInstance(calcField.getText(), "-" + lastNumberEntered, lastNumberEntered.toString()));
 			else
 				// we need to make the number negative
 				calcField.setText(replaceLastInstance(calcField.getText(), lastNumberEntered.toString(), "-" + lastNumberEntered));
-				
-			
+
+
 		} else if (e.getSource() == oppButtons[9]) { // CLR Button
 			calcField.setText("");
 		} else if (e.getSource() == oppButtons[1]) { // = Button
 			calcField.setText(calc.calculate(calcField.getText()));
-			
+
 			JFrame chartFrame = new JFrame("Calculator Chart");
-			chartFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); // close the window the program terminates
+			chartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // close the window the program terminates
 			chartFrame.setResizable(true);
 			chartFrame.setLayout(new BorderLayout()); // allows to center on screen
-			chartFrame.add(new CalculatorChart(), BorderLayout.CENTER);
+			//chartFrame.add(new CalculatorChart(), BorderLayout.CENTER);
 			chartFrame.pack(); // to set the size of the frame to the size of the panel
 			chartFrame.setLocationRelativeTo(null); // center the frame on the screen
 			chartFrame.setVisible(true);
+			 
 		}
 	}
 
 	private String replaceLastInstance(String sourceStr, String findStr, String replaceStr) {
-		
+
 		int lastIndex = sourceStr.lastIndexOf(findStr);
 		if (lastIndex > 0)
 			return sourceStr.substring(0, lastIndex) + replaceStr;

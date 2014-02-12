@@ -1,6 +1,7 @@
-package ie.ait.mase.calcproject;
+package ie.ait.mase.calcprojecttests;
 
 import static org.junit.Assert.*;
+import ie.ait.mase.calcproject.Calculator;
 
 import org.junit.Before;
 import org.junit.Test;

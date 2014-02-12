@@ -1,4 +1,4 @@
-package ie.ait.mase.calcproject;
+package ie.ait.mase.calcprojecttests;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

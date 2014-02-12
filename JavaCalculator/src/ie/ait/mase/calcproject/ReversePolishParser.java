@@ -1,5 +1,6 @@
 package ie.ait.mase.calcproject;
 
+
 import java.util.Queue;
 import java.util.Stack;
 
@@ -10,7 +11,10 @@ public class ReversePolishParser {
 
 	// Operation Constants
 	private final String PLUS = "+", SUBTRACTION = "-", MULTIPLICATION = "*",
-			DIVISION = "/", POWER = "^", ROOT = "\u221A", SIN="sin"; // add more as add functionality
+			DIVISION = "/", POWER = "^", ROOT = "\u221A", SIN="sin", COS="cos" ,TAN="tan",
+			LN = "ln", LOG = "log"; // add more as add functionality
+	
+	private final double e = 2.718282;
 
 	// Constructor
 	public ReversePolishParser(Calculator calc) {
@@ -76,6 +80,23 @@ public class ReversePolishParser {
 			break;
 		case "sin":
 			result = Math.sin(Double.valueOf(num1));
+			break;
+		case "cos":
+			result = Math.cos(Double.valueOf(num1));
+			break;
+		case "tan":
+			result = Math.tan(Double.valueOf(num1));
+			break;
+		case "ln":
+			result = Math.log(Double.valueOf(num1));
+			break;
+		case "log":
+			result = Math.log10(Double.valueOf(num1));
+			break;
+		case "exp":
+			result = Math.pow(Double.valueOf(e),Double.valueOf(num1));
+			break;
+		
 		default:
 			System.out.println("This operation has not yet been implemented: "
 					+ nextToken);
@@ -101,6 +122,10 @@ public class ReversePolishParser {
 		case POWER:
 		case ROOT:
 		case SIN:
+		case TAN:
+		case COS:
+		case LN:
+		case LOG:
 			result = true;
 			break;
 		}

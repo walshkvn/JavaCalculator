@@ -1,6 +1,7 @@
-package ie.ait.mase.calcproject;
+package ie.ait.mase.calcprojecttests;
 
 import static org.junit.Assert.*;
+import ie.ait.mase.calcproject.CalculatorUI;
 
 import java.awt.Component;
 import java.awt.Container;

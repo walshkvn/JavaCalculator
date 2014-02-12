@@ -31,6 +31,7 @@ public class CalculatorParser {
 			char nextToken = calcToParse.charAt(i);
 
 			// if the token is a number save to the queue
+			breakLoop:	//Used for negative numbers
 			if ((nextToken >= ZERO && nextToken <= NINE) || nextToken == DOT) {
 				// add the nextToken to the temp number holder: nextNumber
 				nextNumber += nextToken;
@@ -44,12 +45,17 @@ public class CalculatorParser {
 				}
 
 			} else if (isOperator(nextToken)) {
+				//checks if first thing in string is an operator. or if a negative operator immediately follows a left bracket 
+				if((i==0 && (nextToken == '-')) || ((calcToParse.charAt(i-1)=='(')&&(nextToken == '-'))){
+					nextNumber+=nextToken;
+					break breakLoop;
+				}
 				if (!nextNumber.equalsIgnoreCase("")) {
 					addToQueue(String.valueOf(nextNumber));
 
 					nextNumber = ""; // reset for the next number
 				}
-				if (precedence) {
+				if (!calcStack.isEmpty() && (precedence && !calcStack.peek().equals("("))) {
 					// adds high precedence operands to queue
 					addToQueue(calcStack.pop()); // emptys queue if the next
 													// operator is a minus or
@@ -91,6 +97,7 @@ public class CalculatorParser {
 				if (!calcStack.isEmpty())
 					addToQueue(calcStack.pop()); // add the operator associated
 													// with the parentheses
+				precedence = false;
 			} else if ((nextToken < ZERO || nextToken > NINE)
 					&& (nextToken != MULTIPLY || nextToken != MINUS
 							|| nextToken != PLUS || nextToken != DIVIDE)) {
@@ -164,7 +171,10 @@ public class CalculatorParser {
 	public void emptyStack() {
 		int stackLength = calcStack.size();
 		for (int i = 0; i < stackLength; i++) {
-			addToQueue(calcStack.pop());
+			if(calcStack.peek().equalsIgnoreCase("("))
+					break;
+			else
+				addToQueue(calcStack.pop());
 		}
 
 	}

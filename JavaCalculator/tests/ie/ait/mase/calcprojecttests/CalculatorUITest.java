@@ -7,6 +7,7 @@ import java.awt.Component;
 import java.awt.Container;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import org.junit.Before;
@@ -16,11 +17,13 @@ public class CalculatorUITest {
 
 	CalculatorUI uiCalc;
 	JTextField field;
+	JLabel degRadLabel;
 	
 	@Before
 	public void setUp() throws Exception {
 		uiCalc = new CalculatorUI();
 		field = (JTextField)getChildNamed(uiCalc, "display");
+		degRadLabel = (JLabel)getChildNamed(uiCalc, "d/r toggle");
 	}
 
 	@Test
@@ -194,6 +197,38 @@ public class CalculatorUITest {
 		assertEquals("^", field.getText());
 	}
 	
+	@Test
+	public void testExpOperatorButton() {
+		clickButton("e");
+		assertEquals("e^", field.getText());
+	}
+	
+	@Test
+	public void testPieOperatorButton() {
+		clickButton("pie");
+		assertEquals("π", field.getText());
+	}
+	
+	@Test
+	public void testDegreeToRadiansToggleOperatorButton() {
+		assertEquals("deg", degRadLabel.getText());
+		
+		clickButton("9");
+		clickButton("d/r");
+		assertEquals("0.1570796327", field.getText());
+		assertEquals("rad", degRadLabel.getText());
+		
+		clickButton("d/r");
+		assertEquals("9.0", field.getText());
+		assertEquals("deg", degRadLabel.getText());
+	}
+	
+	@Test
+	public void testDegreeToRadiansToggleOperatorButtonOnEmptyString() {
+		assertEquals("deg", degRadLabel.getText());
+		clickButton("d/r");
+		assertEquals("rad", degRadLabel.getText());
+	}
 	
 	/*
 	 * Utility Methods:

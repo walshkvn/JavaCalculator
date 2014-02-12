@@ -14,17 +14,20 @@ import java.awt.peer.ButtonPeer;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 public class CalculatorUI extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	public static final int WIDTH = 400, HEIGHT = 480, NUM_OF_COLUMNS = 5, 
+	public static final int WIDTH = 400, HEIGHT = 500, NUM_OF_COLUMNS = 5, 
 			NUM_OF_ROWS = 8, BUTTON_PADDING = 2;
-	private final char ZERO = 47, NINE = 57, MINUS = '-';
+	private final double PIE = 3.141592654;
+	private final char ZERO = 47, NINE = 57, MINUS = '-', DOT = '.';
 
 	private GridBagLayout calcLayout;
 	private GridBagConstraints calcGbc; // allows us to position the buttons
@@ -34,6 +37,8 @@ public class CalculatorUI extends JPanel implements ActionListener{
 	private JButton[] oppButtons;
 
 	private JTextField calcField;
+	
+	private JLabel degRad;
 
 	// button positioning
 	// [0] = gridx, [1] = gridy, [2] = gridwidth, [3] = gridheight[]
@@ -68,7 +73,11 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			{1, 3, 1, 1}, // power
 			{2, 2, 1, 1}, // ln
 			{3, 2, 1, 1}, // log
-			{4, 2, 1, 1} // exp
+			{4, 2, 1, 1}, // exp
+			{0, 1, 1, 1}, //e
+			{1, 1, 1, 1}, //pie
+			{2, 1, 1, 1}, //Deg/Radians
+			{4, 1, 2, 1}  //Graph
 	};
 
 	// Constructor
@@ -106,8 +115,8 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			add(numberButtons[i], calcGbc);
 		}
 
-		// create the operation buttons:
-		oppButtons = new JButton[18];
+		// create the operation buttons & assign names (required for JUnit Testing):
+		oppButtons = new JButton[21];
 		oppButtons[0] = new JButton("."); oppButtons[0].setName(".");
 		oppButtons[1] = new JButton("="); oppButtons[1].setName("=");
 		oppButtons[2] = new JButton("+"); oppButtons[2].setName("+");
@@ -126,8 +135,10 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		oppButtons[15] = new JButton("ln"); oppButtons[15].setName("ln");
 		oppButtons[16] = new JButton("log"); oppButtons[16].setName("log");
 		oppButtons[17] = new JButton("exp"); oppButtons[17].setName("exp");
-
-
+		oppButtons[18] = new JButton("e"); oppButtons[18].setName("e");
+		oppButtons[19] = new JButton("π"); oppButtons[19].setName("pie");
+		oppButtons[20] = new JButton("D/R"); oppButtons[20].setName("d/r");
+		
 		// position the buttons
 		for (int i = 0; i < oppButtons.length; i++) {
 			calcGbc.gridx = oppConstraints[i][0];
@@ -148,12 +159,23 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		calcField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		//calcField.setEditable(false);
 		calcField.setFont(new Font("Arial", Font.PLAIN, 24));
+		// modify the constants for the field
 		calcGbc.gridx=0;
 		calcGbc.gridy=0;
-		calcGbc.gridwidth=5;
+		calcGbc.gridwidth=4;
 		calcGbc.gridheight=1;
 
 		add(calcField, calcGbc);
+		
+		degRad = new JLabel("deg", SwingConstants.CENTER);
+		degRad.setName("d/r toggle");
+		degRad.setFont(new Font("Arial", Font.PLAIN, 18));
+		// modify the constants for the field
+		calcGbc.gridx=4;
+		calcGbc.gridy=0;
+		calcGbc.gridwidth=1;
+		calcGbc.gridheight=1;
+		add(degRad, calcGbc);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -179,6 +201,8 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			calcField.setText(calcField.getText() + ")");
 		} else if (e.getSource() == oppButtons[7]) {		// ( Button
 			calcField.setText(calcField.getText() + "(");
+		} else if (e.getSource() == oppButtons[9]) { 		// CLR Button
+			calcField.setText("");
 		} else if (e.getSource() == oppButtons[10]) {		// sin Button
 			calcField.setText(calcField.getText() + "sin(");
 		} else if (e.getSource() == oppButtons[11]) {		// cos Button
@@ -198,13 +222,35 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			calcField.setText(calcField.getText() + "log(");
 		} else if (e.getSource() == oppButtons[17]) {		// tan Button
 			calcField.setText(calcField.getText() + "exp(");
+		} else if (e.getSource() == oppButtons[18]) {		// e Button
+			calcField.setText(calcField.getText() + "e^");
+		} else if (e.getSource() == oppButtons[19]) {		// π Button
+			calcField.setText(calcField.getText() + "π");
+		} else if (e.getSource() == oppButtons[20]) {		// degree -> radian toggle Button
+			if (canConvert(calcField.getText())) {
+				double currentValue = Double.parseDouble(calcField.getText());
+				if (degRad.getText().equalsIgnoreCase("deg")) {
+					calcField.setText("" + currentValue * (PIE/180));
+					degRad.setText("rad");
+				} else {
+					calcField.setText("" + currentValue * (180/PIE));
+					degRad.setText("deg");
+				}
+			} else {
+				// toggle the Degree/Radian Display
+				if (degRad.getText().equalsIgnoreCase("deg")) {
+					degRad.setText("rad");
+				} else {
+					degRad.setText("deg");
+				}
+			}
 		} else if (e.getSource() == oppButtons[8]) { 			// +/- Button
 			// check if the last item entered is a number
 			StringBuffer lastNumberEntered = new StringBuffer();
 			char nextChar = 0;
 			for (int i = calcField.getText().length()-1; i >= 0; i--) {
 				nextChar = calcField.getText().charAt(i);
-				if (nextChar >= ZERO && nextChar <= NINE) {
+				if ((nextChar >= ZERO && nextChar <= NINE) || nextChar == DOT) {
 					lastNumberEntered.insert(0, nextChar);
 				} else if (nextChar == MINUS) {
 					// need to check if the number is negative or if part of an expression
@@ -224,25 +270,55 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			else
 				// we need to make the number negative
 				calcField.setText(replaceLastInstance(calcField.getText(), lastNumberEntered.toString(), "-" + lastNumberEntered));
-
-
-		} else if (e.getSource() == oppButtons[9]) { // CLR Button
-			calcField.setText("");
+			
 		} else if (e.getSource() == oppButtons[1]) { // = Button
-			calcField.setText(calc.calculate(calcField.getText()));
-
-			JFrame chartFrame = new JFrame("Calculator Chart");
-			chartFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); // close the window the program terminates
-			chartFrame.setResizable(true);
-			chartFrame.setLayout(new BorderLayout()); // allows to center on screen
-			//chartFrame.add(new CalculatorChart(), BorderLayout.CENTER);
-			chartFrame.pack(); // to set the size of the frame to the size of the panel
-			chartFrame.setLocationRelativeTo(null); // center the frame on the screen
-			chartFrame.setVisible(true);
+			// check if the problem entered for inconsistencies
+			if (isValidProblem(calcField.getText())) {
+				// calculate a result for the given problem
+				calcField.setText(calc.calculate(calcField.getText()));
+			} else {
+				// display an error message
+				JOptionPane.showMessageDialog(null, "You have entered an invalid problem, please review for closing parentheses, double operators, etc.", 
+						"Invalid Problem Specified", JOptionPane.INFORMATION_MESSAGE);
+			} 
 			 
 		}
 	}
 
+	private boolean canConvert(String problem) {
+		boolean possible = true;
+		if (!problem.equalsIgnoreCase("")) {
+			for (int i = 0; i < problem.length(); i++) {
+				if ((problem.charAt(i) <= ZERO && problem.charAt(i) >= NINE) 
+						&& problem.charAt(i) != DOT) {
+					possible = false;
+					break;
+				}
+			}
+		} else 
+			possible = false;
+		
+		return possible;
+	}
+
+	private boolean isValidProblem(String problem) {
+		// Check for closing brackets
+		int bracket = 0;
+		
+		for (int i = 0; i < problem.length(); i++) {
+			if (problem.charAt(i) == '(')
+				bracket++;
+			else if (problem.charAt(i) == ')')
+				bracket--;
+		}
+		
+		if (bracket == 0)
+			return true;
+		else
+			return false;
+	}
+	
+	
 	private String replaceLastInstance(String sourceStr, String findStr, String replaceStr) {
 
 		int lastIndex = sourceStr.lastIndexOf(findStr);

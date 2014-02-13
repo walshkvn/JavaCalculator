@@ -24,7 +24,7 @@ import javax.swing.WindowConstants;
 public class CalculatorUI extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	public static final int WIDTH = 400, HEIGHT = 500, NUM_OF_COLUMNS = 5, 
+	public static final int WIDTH = 400, HEIGHT = 450, NUM_OF_COLUMNS = 5, 
 			NUM_OF_ROWS = 8, BUTTON_PADDING = 2;
 	private final double PIE = 3.141592654;
 	private final char ZERO = 47, NINE = 57, MINUS = '-', DOT = '.';

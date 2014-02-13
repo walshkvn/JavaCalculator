@@ -73,7 +73,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			{1, 3, 1, 1}, // power
 			{2, 2, 1, 1}, // ln
 			{3, 2, 1, 1}, // log
-			{4, 2, 1, 1}, // exp
+			{4, 2, 1, 1}, // blog
 			{0, 1, 1, 1}, //e
 			{1, 1, 1, 1}, //pie
 			{2, 1, 1, 1}, //Deg/Radians
@@ -134,7 +134,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		oppButtons[14] = new JButton("x\u207F"); oppButtons[14].setName("power");
 		oppButtons[15] = new JButton("ln"); oppButtons[15].setName("ln");
 		oppButtons[16] = new JButton("log"); oppButtons[16].setName("log");
-		oppButtons[17] = new JButton("exp"); oppButtons[17].setName("exp");
+		oppButtons[17] = new JButton("blog"); oppButtons[17].setName("blog");
 		oppButtons[18] = new JButton("e"); oppButtons[18].setName("e");
 		oppButtons[19] = new JButton("π"); oppButtons[19].setName("pie");
 		oppButtons[20] = new JButton("D/R"); oppButtons[20].setName("d/r");
@@ -217,12 +217,12 @@ public class CalculatorUI extends JPanel implements ActionListener{
 
 		} else if (e.getSource() == oppButtons[14]) {		// power Button
 			calcField.setText(calcField.getText() + "^");
-		} else if (e.getSource() == oppButtons[15]) {		// tan Button
+		} else if (e.getSource() == oppButtons[15]) {		// ln Button
 			calcField.setText(calcField.getText() + "ln(");
-		} else if (e.getSource() == oppButtons[16]) {		// tan Button
+		} else if (e.getSource() == oppButtons[16]) {		// log Button
 			calcField.setText(calcField.getText() + "log(");
-		} else if (e.getSource() == oppButtons[17]) {		// tan Button
-			calcField.setText(calcField.getText() + "exp(");
+		} else if (e.getSource() == oppButtons[17]) {		// blog Button
+			calcField.setText(calcField.getText() + "blog");
 		} else if (e.getSource() == oppButtons[18]) {		// e Button
 			calcField.setText(calcField.getText() + "e^");
 		} else if (e.getSource() == oppButtons[19]) {		// π Button

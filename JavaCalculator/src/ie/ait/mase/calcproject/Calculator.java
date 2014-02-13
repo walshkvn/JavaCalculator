@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Queue;
 
 public class Calculator {
+	
+	
 	public String calculate(String problem) {
 		// parse string into its component parts and return it in Reverse Polish
 		// form
@@ -16,6 +18,18 @@ public class Calculator {
 		return result;
 	}
 
+	public String calculate(String problem, boolean radians) {
+		// parse string into its component parts and return it in Reverse Polish
+		// form
+		CalculatorParser parser = new CalculatorParser();
+		Queue<String> problemRP = parser.parse(problem);
+
+		// calculate the result of the problem in reverse polish notation
+		String result = calcProblemUsingReversePolish(problemRP);
+
+		return result;
+	}
+	
 	private String calcProblemUsingReversePolish(Queue<String> problemRP) {
 		// Create the Reverse Polish Calculator to use
 		ReversePolishParser rvCalc = new ReversePolishParser(this);

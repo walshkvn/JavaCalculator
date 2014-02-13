@@ -274,11 +274,14 @@ public class CalculatorUI extends JPanel implements ActionListener{
 				// we need to make the number negative
 				calcField.setText(replaceLastInstance(calcField.getText(), lastNumberEntered.toString(), "-" + lastNumberEntered));
 			
-		} else if (e.getSource() == oppButtons[1]) { // = Button
+		} else if (e.getSource() == oppButtons[1]) { 				// = Button ************
 			// check if the problem entered for inconsistencies
 			if (isValidProblem(calcField.getText())) {
 				// calculate a result for the given problem
-				calcField.setText(calc.calculate(calcField.getText()));
+				if (degRad.getText().equalsIgnoreCase("deg"))
+					calcField.setText(calc.calculate(calcField.getText(), false));
+				else
+					calcField.setText(calc.calculate(calcField.getText(), true));
 			} else {
 				// display an error message
 				JOptionPane.showMessageDialog(null, "You have entered an invalid problem, please review for closing parentheses, double operators, etc.", 

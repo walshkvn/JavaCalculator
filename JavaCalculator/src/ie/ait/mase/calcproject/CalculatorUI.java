@@ -77,7 +77,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			{0, 1, 1, 1}, //e
 			{1, 1, 1, 1}, //pie
 			{2, 1, 1, 1}, //Deg/Radians
-			{4, 1, 2, 1}  //Graph
+			{3, 1, 2, 1}  //Graph
 	};
 
 	// Constructor
@@ -116,7 +116,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		}
 
 		// create the operation buttons & assign names (required for JUnit Testing):
-		oppButtons = new JButton[21];
+		oppButtons = new JButton[22];
 		oppButtons[0] = new JButton("."); oppButtons[0].setName(".");
 		oppButtons[1] = new JButton("="); oppButtons[1].setName("=");
 		oppButtons[2] = new JButton("+"); oppButtons[2].setName("+");
@@ -138,6 +138,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		oppButtons[18] = new JButton("e"); oppButtons[18].setName("e");
 		oppButtons[19] = new JButton("π"); oppButtons[19].setName("pie");
 		oppButtons[20] = new JButton("D/R"); oppButtons[20].setName("d/r");
+		oppButtons[21] = new JButton("Graphs"); oppButtons[21].setName("graph");
 		
 		// position the buttons
 		for (int i = 0; i < oppButtons.length; i++) {
@@ -226,7 +227,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			calcField.setText(calcField.getText() + "e^");
 		} else if (e.getSource() == oppButtons[19]) {		// π Button
 			calcField.setText(calcField.getText() + "π");
-		} else if (e.getSource() == oppButtons[20]) {		// degree -> radian toggle Button
+		} else if (e.getSource() == oppButtons[20]) {		// degree->radians toggle Button
 			if (canConvert(calcField.getText())) {
 				double currentValue = Double.parseDouble(calcField.getText());
 				if (degRad.getText().equalsIgnoreCase("deg")) {
@@ -244,6 +245,8 @@ public class CalculatorUI extends JPanel implements ActionListener{
 					degRad.setText("deg");
 				}
 			}
+		} else if (e.getSource() == oppButtons[21]) { 			// graph Button
+			JOptionPane.showMessageDialog(null, "Yet to be implemented!");
 		} else if (e.getSource() == oppButtons[8]) { 			// +/- Button
 			// check if the last item entered is a number
 			StringBuffer lastNumberEntered = new StringBuffer();

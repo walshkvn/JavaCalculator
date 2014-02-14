@@ -24,6 +24,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import java.awt.Font;
 
 public class CreateGraphUI extends JFrame implements ActionListener{
 
@@ -52,37 +53,45 @@ public class CreateGraphUI extends JFrame implements ActionListener{
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JLabel lblEnterTheFormula = new JLabel("Enter the formula to graph:e.g. x^2+4x+7 (use 'x' as the variable)");
-		lblEnterTheFormula.setBounds(5, 11, 170, 16);
+		JLabel lblEnterTheFormula = new JLabel("Enter the formula to graph:e.g. x^2+4x+7");
+		lblEnterTheFormula.setFont(new Font("Lucida Grande", Font.BOLD, 14));
+		lblEnterTheFormula.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEnterTheFormula.setBounds(5, 11, 379, 27);
 		panel.add(lblEnterTheFormula);
 		
+		JLabel label = new JLabel("Note: use 'x' as the variable");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setBounds(5, 38, 379, 27);
+		panel.add(label);
+		
 		formulaField = new JTextField();
-		formulaField.setBounds(15, 39, 335, 39);
+		formulaField.setBounds(15, 83, 335, 39);
 		panel.add(formulaField);
 		formulaField.setColumns(10);
 		formulaField.setText(problem);
 		
 		JLabel lblEnterTheLower = new JLabel("Enter the lower range to graph:");
-		lblEnterTheLower.setBounds(25, 101, 207, 16);
+		lblEnterTheLower.setBounds(25, 159, 207, 16);
 		panel.add(lblEnterTheLower);
 		
 		JLabel lblEnterTheHigher = new JLabel("Enter the higher range to graph:");
-		lblEnterTheHigher.setBounds(24, 152, 208, 16);
+		lblEnterTheHigher.setBounds(24, 205, 208, 16);
 		panel.add(lblEnterTheHigher);
 		
 		lowerLimit = new JTextField();
-		lowerLimit.setBounds(269, 95, 81, 28);
+		lowerLimit.setBounds(269, 153, 81, 28);
 		panel.add(lowerLimit);
 		lowerLimit.setColumns(10);
 		
 		upperLimit = new JTextField();
-		upperLimit.setBounds(269, 146, 81, 28);
+		upperLimit.setBounds(269, 193, 81, 28);
 		panel.add(upperLimit);
 		upperLimit.setColumns(10);
 		
 		btnGraph = new JButton("Graph");
-		btnGraph.setBounds(233, 203, 117, 29);
+		btnGraph.setBounds(233, 233, 117, 29);
 		panel.add(btnGraph);
+		
 		btnGraph.addActionListener(this);
 	}
 
@@ -146,5 +155,4 @@ public class CreateGraphUI extends JFrame implements ActionListener{
 		
 		return valid;
 	}
-
 }

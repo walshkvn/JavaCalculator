@@ -1,6 +1,7 @@
-package ie.ait.mase.calcproject;
+package ie.ait.mase.calcprojecttests;
 
 import static org.junit.Assert.*;
+import ie.ait.mase.calcproject.CalculatorParser;
 
 import java.util.LinkedList;
 import java.util.Queue;

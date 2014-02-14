@@ -12,9 +12,11 @@ public class ReversePolishParser {
 	// Operation Constants
 	private final String PLUS = "+", SUBTRACTION = "-", MULTIPLICATION = "*",
 			DIVISION = "/", POWER = "^", ROOT = "\u221A", SIN="sin", COS="cos" ,TAN="tan",
-			LN = "ln", LOG = "log"; // add more as add functionality
-	
-	private final double e = 2.718282;
+			LN = "ln", BLOG = "v", LOG = "log" ; // add more as add functionality
+
+	public final double π = Math.PI;
+	public final double e = Math.E;
+
 
 	// Constructor
 	public ReversePolishParser(Calculator calc) {
@@ -31,9 +33,14 @@ public class ReversePolishParser {
 			// get the next element on the queue
 			String nextToken = problemRPForm.poll();
 			// if number then push onto stack
-			if (!isOperator(nextToken))
+			if (!isOperator(nextToken)){
+				if(nextToken.equals("π"))
+					nextToken=Double.toString(π);
+				if(nextToken.equals("e"))
+						nextToken=Double.toString(e);
+				
 				numberStack.add(nextToken);
-			else {
+			}else {
 				if(nextToken.length()>1){
 					String num1 = numberStack.pop();
 					numberStack.add(String.valueOf(calculateResult(num1,"1",
@@ -45,7 +52,7 @@ public class ReversePolishParser {
 							nextToken)));
 				}
 				// calculate result
-				
+
 
 			}
 		}
@@ -79,13 +86,13 @@ public class ReversePolishParser {
 			result = Math.pow(Double.valueOf(num2), 1 / Double.valueOf(num1));
 			break;
 		case "sin":
-			result = Math.sin(Double.valueOf(num1));
+			result = calc.calcSin(Double.valueOf(num1));
 			break;
 		case "cos":
-			result = Math.cos(Double.valueOf(num1));
+			result = calc.calcCos(Double.valueOf(num1));
 			break;
 		case "tan":
-			result = Math.tan(Double.valueOf(num1));
+			result = calc.calcTan(Double.valueOf(num1));
 			break;
 		case "ln":
 			result = Math.log(Double.valueOf(num1));
@@ -96,7 +103,9 @@ public class ReversePolishParser {
 		case "exp":
 			result = Math.pow(Double.valueOf(e),Double.valueOf(num1));
 			break;
-		
+		case "v":
+			result = Math.log(Double.valueOf(num2))/Math.log(Double.valueOf(num1));
+			break;
 		default:
 			System.out.println("This operation has not yet been implemented: "
 					+ nextToken);
@@ -126,6 +135,7 @@ public class ReversePolishParser {
 		case COS:
 		case LN:
 		case LOG:
+		case BLOG:
 			result = true;
 			break;
 		}

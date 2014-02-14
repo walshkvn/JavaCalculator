@@ -7,15 +7,16 @@ import java.util.Stack;
 public class CalculatorParser {
 	private final char ZERO = 48, NINE = 57, PLUS = '+', MINUS = '-',
 			DOT = '.', MULTIPLY = '*', DIVIDE = '/', LEFT_BRACKET = '(',
-			RIGHT_BRACKET = ')', POWER = '^', ROOT = '√'; // add more as more functionality
+			RIGHT_BRACKET = ')', POWER = '^', ROOT = '√', BLOG = 'v'; // add more as more functionality
 												// added
 
 	private Queue<String> calcQueue = new LinkedList<String>();
 	private Stack<String> calcStack = new Stack();
 	private boolean precedence = false;
-	private boolean otherOperation = false;
+	private int otherOperation = 0;
 	private boolean powerOperation = false;
-
+	private final double π = Math.PI;
+	private final double e = Math.E;
 	public Queue<String> parse(String calcToParse) {
 
 		String reversePolish = null;
@@ -32,27 +33,32 @@ public class CalculatorParser {
 
 			// if the token is a number save to the queue
 			breakLoop:	//Used for negative numbers
-			if ((nextToken >= ZERO && nextToken <= NINE) || nextToken == DOT) {
+			if ((nextToken >= ZERO && nextToken <= NINE) || nextToken == DOT || nextToken == 'π' || nextToken == 'e' ) {
 				// add the nextToken to the temp number holder: nextNumber
 				nextNumber += nextToken;
-
-			} else if (isOperator(nextToken)) {
+				
+			} else if (isOperator(nextToken)|| (function.equalsIgnoreCase("blo") && nextToken=='g')) {
+				if(nextToken=='g'){
+					nextToken = BLOG;
+					function = "";
+					otherOperation++;
+				}
 				//checks if first thing in string is an operator. or if a negative operator immediately follows a left bracket 
 				if((i==0 && (nextToken == '-')) || ((calcToParse.charAt(i-1)=='(')&&(nextToken == '-'))){
 					nextNumber+=nextToken;
 					break breakLoop;
 				}
-				
+
 				// put the nextNumber to the Queue as we have finished reading in numbers
 				if (!nextNumber.equalsIgnoreCase("")) {
 					addToQueue(String.valueOf(nextNumber));
 
 					nextNumber = ""; // reset for the next number
 				}
-				
+
 				if (!calcStack.isEmpty()) {
 					switch (calcStack.peek()) {
-					case "^": case "√":
+					case "^": case "√": case "v":
 						precedence = true;
 					case "*": case "/":
 						if (nextToken == '+' || nextToken == '-') {
@@ -60,7 +66,7 @@ public class CalculatorParser {
 						}
 					}
 				}
-				
+
 				if (!calcStack.isEmpty() && (precedence && !calcStack.peek().equals("("))) {
 					// adds high precedence operands to queue
 					addToQueue(calcStack.pop()); // emptys queue if the next
@@ -80,6 +86,9 @@ public class CalculatorParser {
 			} else if (nextToken == LEFT_BRACKET) {
 				// add the next number to the Queue as we have reached an
 				// operator, i.e. the end of the number
+				if(otherOperation>0 && !isfuntion(calcStack.peek())) // need to make sure that the ( is belonging to another function.
+					otherOperation--;
+				
 				if (!nextNumber.equalsIgnoreCase("")) {
 					addToQueue(String.valueOf(nextNumber));
 					nextNumber = ""; // reset for the next number
@@ -101,26 +110,26 @@ public class CalculatorParser {
 				}
 				if(!calcStack.isEmpty())
 					calcStack.pop(); // need to get rid of the left parentheses
+
+				if(otherOperation>0) {// need to pop off function belonging to the bracket
+					addToQueue(calcStack.pop());
+					otherOperation--;
+				}
 				
 			} else if ((nextToken < ZERO || nextToken > NINE)
 					&& (nextToken != MULTIPLY || nextToken != MINUS
 							|| nextToken != PLUS || nextToken != DIVIDE)) {
 				function += nextToken;
+				
+				if (isfuntion(function)) {
+					otherOperation+=1;
+					System.out.println(function);
+					addToStack(function.toLowerCase());
+					function = "";
+				}	
 
-				switch (function.toLowerCase()) {
-					case "sin":
-					case "cos":
-					case "tan":
-					case "ln":
-					case "log":
-					case "exp":
-						otherOperation = true;
-						System.out.println(function);
-						addToStack(function);
-						function = "";
-						break;
-				}
 			}
+
 		}
 
 		// problems don't usually end in operators so need to add the last
@@ -138,6 +147,22 @@ public class CalculatorParser {
 
 		return calcQueue;
 
+	}
+
+	private boolean isfuntion(String function) {
+		switch (function.toLowerCase()) {
+			case "sin":
+			case "cos":
+			case "tan":
+			case "ln":
+			case "log":
+			case "exp":
+			case "v":
+				return true;
+			default:
+				return false;
+
+		}
 	}
 
 	// Check if a character is an operator +,-,*, etc

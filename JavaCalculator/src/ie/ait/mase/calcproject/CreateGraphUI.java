@@ -102,7 +102,7 @@ public class CreateGraphUI extends JFrame implements ActionListener{
 					
 					for(double i = lLimit; i <= uLimit; i=i+0.1) {
 						String problem = formulaField.getText().toLowerCase().replaceAll("x", ""+i);
-						series1.add(i, Double.parseDouble(calc.calculate(problem)));
+						series1.add(i, Double.parseDouble(calc.calculate(problem, true)));
 					}
 					
 					new GraphUI(formulaField.getText(), series1);

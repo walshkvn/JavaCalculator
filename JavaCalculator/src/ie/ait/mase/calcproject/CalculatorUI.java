@@ -37,7 +37,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 	private JButton[] oppButtons;
 
 	private JTextField calcField;
-	
+
 	private JLabel degRad;
 
 	// button positioning
@@ -139,7 +139,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		oppButtons[19] = new JButton("π"); oppButtons[19].setName("pie");
 		oppButtons[20] = new JButton("D/R"); oppButtons[20].setName("d/r");
 		oppButtons[21] = new JButton("Graphs"); oppButtons[21].setName("graph");
-		
+
 		// position the buttons
 		for (int i = 0; i < oppButtons.length; i++) {
 			calcGbc.gridx = oppConstraints[i][0];
@@ -167,7 +167,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		calcGbc.gridheight=1;
 
 		add(calcField, calcGbc);
-		
+
 		degRad = new JLabel("deg", SwingConstants.CENTER);
 		degRad.setName("d/r toggle");
 		degRad.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -224,7 +224,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		} else if (e.getSource() == oppButtons[17]) {		// blog Button
 			calcField.setText(calcField.getText() + "blog");
 		} else if (e.getSource() == oppButtons[18]) {		// e Button
-			calcField.setText(calcField.getText() + "e^");
+			calcField.setText(calcField.getText() + "e");
 		} else if (e.getSource() == oppButtons[19]) {		// π Button
 			calcField.setText(calcField.getText() + "π");
 		} else if (e.getSource() == oppButtons[20]) {		// degree->radians toggle Button
@@ -278,7 +278,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			else
 				// we need to make the number negative
 				calcField.setText(replaceLastInstance(calcField.getText(), lastNumberEntered.toString(), "-" + lastNumberEntered));
-			
+
 		} else if (e.getSource() == oppButtons[1]) { 				// = Button ************
 			// check if the problem entered for inconsistencies
 			if (isValidProblem(calcField.getText())) {
@@ -292,7 +292,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 				JOptionPane.showMessageDialog(null, "You have entered an invalid problem, please review for closing parentheses, double operators, etc.", 
 						"Invalid Problem Specified", JOptionPane.INFORMATION_MESSAGE);
 			} 
-			 
+
 		}
 	}
 
@@ -308,28 +308,28 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			}
 		} else 
 			possible = false;
-		
+
 		return possible;
 	}
 
 	private boolean isValidProblem(String problem) {
 		// Check for closing brackets
 		int bracket = 0;
-		
+
 		for (int i = 0; i < problem.length(); i++) {
 			if (problem.charAt(i) == '(')
 				bracket++;
 			else if (problem.charAt(i) == ')')
 				bracket--;
 		}
-		
+
 		if (bracket == 0)
 			return true;
 		else
 			return false;
 	}
-	
-	
+
+
 	private String replaceLastInstance(String sourceStr, String findStr, String replaceStr) {
 
 		int lastIndex = sourceStr.lastIndexOf(findStr);

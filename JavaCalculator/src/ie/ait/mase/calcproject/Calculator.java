@@ -5,7 +5,8 @@ import java.util.Queue;
 
 public class Calculator {
 	
-	
+	private boolean radians;
+
 	public String calculate(String problem) {
 		// parse string into its component parts and return it in Reverse Polish
 		// form
@@ -21,15 +22,17 @@ public class Calculator {
 	public String calculate(String problem, boolean radians) {
 		// parse string into its component parts and return it in Reverse Polish
 		// form
+		this.radians=radians;
+		
 		CalculatorParser parser = new CalculatorParser();
 		Queue<String> problemRP = parser.parse(problem);
 
 		// calculate the result of the problem in reverse polish notation
 		String result = calcProblemUsingReversePolish(problemRP);
-
+		
 		return result;
 	}
-	
+
 	private String calcProblemUsingReversePolish(Queue<String> problemRP) {
 		// Create the Reverse Polish Calculator to use
 		ReversePolishParser rvCalc = new ReversePolishParser(this);
@@ -62,6 +65,23 @@ public class Calculator {
 	}
 
 	public double calcCos(Double num1) {
-		return Math.cos(num1);
+		if(radians)
+			return Math.cos(num1);
+		else
+			return Math.cos(num1/(180/Math.PI));
+	}
+	
+	public double calcSin(Double num1) {
+		if(radians)
+			return Math.sin(num1);
+		else
+			return Math.sin(num1/(180/Math.PI));
+	}
+	
+	public double calcTan(Double num1) {
+		if(radians)
+			return Math.tan(num1);
+		else
+			return Math.tan(num1/(180/Math.PI));
 	}
 }

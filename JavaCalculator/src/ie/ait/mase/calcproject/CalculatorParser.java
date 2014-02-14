@@ -35,14 +35,6 @@ public class CalculatorParser {
 			if ((nextToken >= ZERO && nextToken <= NINE) || nextToken == DOT) {
 				// add the nextToken to the temp number holder: nextNumber
 				nextNumber += nextToken;
-//
-//				if (i >= nextNumber.length()) {
-//					if (calcStack.peek().equals(String.valueOf(MULTIPLY))
-//							|| calcStack.peek().equals(String.valueOf(DIVIDE))
-//							|| calcStack.peek().equals(String.valueOf(POWER))
-//							|| calcStack.peek().equals(String.valueOf(ROOT)))
-//						precedence = true;
-//				}
 
 			} else if (isOperator(nextToken)) {
 				//checks if first thing in string is an operator. or if a negative operator immediately follows a left bracket 
@@ -127,11 +119,8 @@ public class CalculatorParser {
 						addToStack(function);
 						function = "";
 						break;
-
 				}
-
 			}
-
 		}
 
 		// problems don't usually end in operators so need to add the last

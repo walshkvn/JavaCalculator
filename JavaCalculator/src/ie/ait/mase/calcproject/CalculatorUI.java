@@ -246,7 +246,12 @@ public class CalculatorUI extends JPanel implements ActionListener{
 				}
 			}
 		} else if (e.getSource() == oppButtons[21]) { 			// graph Button
-			JOptionPane.showMessageDialog(null, "Yet to be implemented!");
+			try {
+				CreateGraphUI createGraph = new CreateGraphUI(calcField.getText());
+				createGraph.setVisible(true);
+			} catch (Exception excpt) {
+				excpt.printStackTrace();
+			}
 		} else if (e.getSource() == oppButtons[8]) { 			// +/- Button
 			// check if the last item entered is a number
 			StringBuffer lastNumberEntered = new StringBuffer();

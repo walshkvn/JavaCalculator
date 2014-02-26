@@ -200,7 +200,7 @@ public class CalculatorUITest {
 	@Test
 	public void testExpOperatorButton() {
 		clickButton("e");
-		assertEquals("e^", field.getText());
+		assertEquals("e", field.getText());
 	}
 	
 	@Test

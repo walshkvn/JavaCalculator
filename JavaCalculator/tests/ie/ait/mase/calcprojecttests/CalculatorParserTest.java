@@ -134,16 +134,16 @@ public class CalculatorParserTest {
 		assertEquals("-", getElementAtIndex(3));
 		
 		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
-		assertEquals("+", getElementAtIndex(4));
+		assertEquals("5", getElementAtIndex(4));
 		
 		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
-		assertEquals("5", getElementAtIndex(5));
+		assertEquals("1", getElementAtIndex(5));
 		
 		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
-		assertEquals("1", getElementAtIndex(6));
+		assertEquals("-", getElementAtIndex(6));
 		
 		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
-		assertEquals("-", getElementAtIndex(7));
+		assertEquals("+", getElementAtIndex(7));
 		
 		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
 		assertEquals("+", getElementAtIndex(8));
@@ -169,6 +169,68 @@ public class CalculatorParserTest {
 		assertEquals("+", getElementAtIndex(4));
 	}
 	
+	@Test
+	public void testPrecedence() {
+		result = parser.parse("3+2*4-1");
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("3", getElementAtIndex(0));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("2", getElementAtIndex(1));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("4", getElementAtIndex(2));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("*", getElementAtIndex(3));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("+", getElementAtIndex(4));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("1", getElementAtIndex(5));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("-", getElementAtIndex(6));
+		
+	}
+	
+	@Test
+	public void testOtherOperators() {
+		result = parser.parse("sin(4+(cos(1+5^2/3)))");
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("4", getElementAtIndex(0));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("1", getElementAtIndex(1));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("5", getElementAtIndex(2));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("2", getElementAtIndex(3));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("^", getElementAtIndex(4));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("3", getElementAtIndex(5));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("/", getElementAtIndex(6));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("+", getElementAtIndex(7));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("cos", getElementAtIndex(8));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("+", getElementAtIndex(9));
+		
+		tempQueue = new LinkedList<String>(result); // need to reset queue as elements may already have been removed
+		assertEquals("sin", getElementAtIndex(10));
+	}
 	
 	// other methods:
 	private String getElementAtIndex(int index) {

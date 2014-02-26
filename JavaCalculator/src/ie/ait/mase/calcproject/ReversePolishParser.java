@@ -106,10 +106,6 @@ public class ReversePolishParser {
 		case "v":
 			result = Math.log(Double.valueOf(num2))/Math.log(Double.valueOf(num1));
 			break;
-		default:
-			System.out.println("This operation has not yet been implemented: "
-					+ nextToken);
-			break;
 		}
 
 		return result;

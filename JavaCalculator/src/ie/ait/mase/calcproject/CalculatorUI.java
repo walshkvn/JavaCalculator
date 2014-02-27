@@ -24,8 +24,8 @@ import javax.swing.WindowConstants;
 public class CalculatorUI extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	public static final int WIDTH = 400, HEIGHT = 450, NUM_OF_COLUMNS = 5, 
-			NUM_OF_ROWS = 8, BUTTON_PADDING = 2;
+	public static final int WIDTH = 400, HEIGHT = 500, NUM_OF_COLUMNS = 5, 
+			NUM_OF_ROWS = 9, BUTTON_PADDING = 2;
 	private final double PIE = 3.141592654;
 	private final char ZERO = 47, NINE = 57, MINUS = '-', DOT = '.';
 
@@ -43,41 +43,44 @@ public class CalculatorUI extends JPanel implements ActionListener{
 	// button positioning
 	// [0] = gridx, [1] = gridy, [2] = gridwidth, [3] = gridheight[]
 	private int[][] numConstraints = new int [][] {
-			{0, 7, 2, 1},
+			{0, 8, 2, 1},
+			{0, 7, 1, 1},
+			{1, 7, 1, 1},
+			{2, 7, 1, 1},
 			{0, 6, 1, 1},
 			{1, 6, 1, 1},
 			{2, 6, 1, 1},
 			{0, 5, 1, 1},
 			{1, 5, 1, 1},
-			{2, 5, 1, 1},
-			{0, 4, 1, 1},
-			{1, 4, 1, 1},
-			{2, 4, 1, 1}
+			{2, 5, 1, 1}
 	};
 
 	private int[][] oppConstraints = new int [][] {
-			{2, 7, 1, 1}, //.
-			{4, 6, 1, 2}, // =
-			{3, 5, 1, 1}, // + 
-			{4, 5, 1, 1}, // - 
-			{3, 4, 1, 1}, // *
-			{4, 4, 1, 1}, // /
-			{1, 2, 1, 1}, // (
-			{0, 2, 1, 1}, // )
-			{3, 7, 1, 1}, // +/-
-			{3, 6, 1, 1}, // CLR
-			{2, 3, 1, 1}, // sin
-			{3, 3, 1, 1}, // cos
-			{4, 3, 1, 1}, // tan
-			{0, 3, 1, 1}, // sqr root
-			{1, 3, 1, 1}, // power
-			{2, 2, 1, 1}, // ln
-			{3, 2, 1, 1}, // log
-			{4, 2, 1, 1}, // blog
-			{0, 1, 1, 1}, //e
-			{1, 1, 1, 1}, //pie
-			{2, 1, 1, 1}, //Deg/Radians
-			{3, 1, 2, 1}  //Graph
+			{2, 8, 1, 1}, //.
+			{4, 7, 1, 2}, // =
+			{3, 6, 1, 1}, // + 
+			{4, 6, 1, 1}, // - 
+			{3, 5, 1, 1}, // *
+			{4, 5, 1, 1}, // /
+			{1, 3, 1, 1}, // (
+			{0, 3, 1, 1}, // )
+			{3, 8, 1, 1}, // +/-
+			{3, 7, 1, 1}, // CLR
+			{2, 4, 1, 1}, // sin
+			{3, 4, 1, 1}, // cos
+			{4, 4, 1, 1}, // tan
+			{0, 4, 1, 1}, // sqr root
+			{1, 4, 1, 1}, // power
+			{2, 3, 1, 1}, // ln
+			{3, 3, 1, 1}, // log
+			{4, 3, 1, 1}, // blog
+			{0, 2, 1, 1}, //e
+			{1, 2, 1, 1}, //pie
+			{2, 2, 1, 1}, //Deg/Radians
+			{3, 1, 2, 2},  //Graph
+			{0, 1, 1, 1}, //factorial
+			{1, 1, 1, 1}, //modulas
+			{2, 1, 1, 1}  //exp
 	};
 
 	// Constructor
@@ -90,7 +93,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		int width =  (WIDTH/NUM_OF_COLUMNS) - (BUTTON_PADDING*2);
 		calcLayout.columnWidths = new int[] {width, width, width, width, width};
 		calcLayout.rowHeights = new int[] {HEIGHT/NUM_OF_ROWS, HEIGHT/NUM_OF_ROWS, HEIGHT/NUM_OF_ROWS, 
-				HEIGHT/NUM_OF_ROWS, HEIGHT/NUM_OF_ROWS, HEIGHT/NUM_OF_ROWS, HEIGHT/NUM_OF_ROWS};
+				HEIGHT/NUM_OF_ROWS, HEIGHT/NUM_OF_ROWS, HEIGHT/NUM_OF_ROWS, HEIGHT/NUM_OF_ROWS, HEIGHT/NUM_OF_ROWS};
 		setLayout(calcLayout);
 
 		// place the buttons
@@ -116,7 +119,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		}
 
 		// create the operation buttons & assign names (required for JUnit Testing):
-		oppButtons = new JButton[22];
+		oppButtons = new JButton[25];
 		oppButtons[0] = new JButton("."); oppButtons[0].setName(".");
 		oppButtons[1] = new JButton("="); oppButtons[1].setName("=");
 		oppButtons[2] = new JButton("+"); oppButtons[2].setName("+");
@@ -134,11 +137,14 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		oppButtons[14] = new JButton("x\u207F"); oppButtons[14].setName("power");
 		oppButtons[15] = new JButton("ln"); oppButtons[15].setName("ln");
 		oppButtons[16] = new JButton("log"); oppButtons[16].setName("log");
-		oppButtons[17] = new JButton("blog"); oppButtons[17].setName("blog");
+		oppButtons[17] = new JButton("nlog"); oppButtons[17].setName("nlog");
 		oppButtons[18] = new JButton("e"); oppButtons[18].setName("e");
 		oppButtons[19] = new JButton("π"); oppButtons[19].setName("pie");
 		oppButtons[20] = new JButton("D/R"); oppButtons[20].setName("d/r");
-		oppButtons[21] = new JButton("Graphs"); oppButtons[21].setName("graph");
+		oppButtons[21] = new JButton("Graphs / etc"); oppButtons[21].setName("graph");
+		oppButtons[22] = new JButton("exp"); oppButtons[22].setName("exp");
+		oppButtons[23] = new JButton("!"); oppButtons[23].setName("!");
+		oppButtons[24] = new JButton("%"); oppButtons[24].setName("%");
 
 		// position the buttons
 		for (int i = 0; i < oppButtons.length; i++) {
@@ -162,7 +168,7 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		calcField.setFont(new Font("Arial", Font.PLAIN, 24));
 		// modify the constants for the field
 		calcGbc.gridx=0;
-		calcGbc.gridy=0;
+		calcGbc.gridy=0; 
 		calcGbc.gridwidth=4;
 		calcGbc.gridheight=1;
 
@@ -222,11 +228,17 @@ public class CalculatorUI extends JPanel implements ActionListener{
 		} else if (e.getSource() == oppButtons[16]) {		// log Button
 			calcField.setText(calcField.getText() + "log(");
 		} else if (e.getSource() == oppButtons[17]) {		// blog Button
-			calcField.setText(calcField.getText() + "blog");
+			calcField.setText(calcField.getText() + "nlog");
 		} else if (e.getSource() == oppButtons[18]) {		// e Button
 			calcField.setText(calcField.getText() + "e");
 		} else if (e.getSource() == oppButtons[19]) {		// π Button
 			calcField.setText(calcField.getText() + "π");
+		} else if (e.getSource() == oppButtons[22]) {		// exp Button
+			calcField.setText(calcField.getText() + "e^");
+		} else if (e.getSource() == oppButtons[23]) {		// ! Button
+			calcField.setText(calcField.getText() + "!");
+		} else if (e.getSource() == oppButtons[24]) {		// % Button
+			calcField.setText(calcField.getText() + "%");
 		} else if (e.getSource() == oppButtons[20]) {		// degree->radians toggle Button
 			if (canConvert(calcField.getText())) {
 				double currentValue = Double.parseDouble(calcField.getText());
@@ -283,10 +295,14 @@ public class CalculatorUI extends JPanel implements ActionListener{
 			// check if the problem entered for inconsistencies
 			if (isValidProblem(calcField.getText())) {
 				// calculate a result for the given problem
-				if (degRad.getText().equalsIgnoreCase("deg"))
-					calcField.setText(calc.calculate(calcField.getText(), false));
-				else
-					calcField.setText(calc.calculate(calcField.getText(), true));
+				try {
+					if (degRad.getText().equalsIgnoreCase("deg"))
+						calcField.setText(calc.calculate(calcField.getText(), false));
+					else
+						calcField.setText(calc.calculate(calcField.getText(), true));
+				} catch (Exception exc) {
+					calcField.setText("Error!");
+				}
 			} else {
 				// display an error message
 				JOptionPane.showMessageDialog(null, "You have entered an invalid problem, please review for closing parentheses, double operators, etc.", 

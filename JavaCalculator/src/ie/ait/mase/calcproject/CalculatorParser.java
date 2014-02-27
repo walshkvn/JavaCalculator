@@ -7,7 +7,7 @@ import java.util.Stack;
 public class CalculatorParser {
 	private final char ZERO = 48, NINE = 57, PLUS = '+', MINUS = '-',
 			DOT = '.', MULTIPLY = '*', DIVIDE = '/', LEFT_BRACKET = '(',
-			RIGHT_BRACKET = ')', POWER = '^', ROOT = '√', BLOG = 'v'; // add more as more functionality
+			RIGHT_BRACKET = ')', POWER = '^', ROOT = '√', BLOG = 'v', FACTORIAL = '!', MODULUS= '%'; // add more as more functionality
 												// added
 
 	private Queue<String> calcQueue = new LinkedList<String>();
@@ -36,8 +36,8 @@ public class CalculatorParser {
 			if ((nextToken >= ZERO && nextToken <= NINE) || nextToken == DOT || nextToken == 'π' || nextToken == 'e' ) {
 				// add the nextToken to the temp number holder: nextNumber
 				nextNumber += nextToken;
-				
-			} else if (isOperator(nextToken)|| (function.equalsIgnoreCase("blo") && nextToken=='g')) {
+
+			} else if (isOperator(nextToken)|| (function.equalsIgnoreCase("nlo") && nextToken=='g')) {
 				if(nextToken=='g'){
 					nextToken = BLOG;
 					function = "";
@@ -58,7 +58,7 @@ public class CalculatorParser {
 
 				if (!calcStack.isEmpty()) {
 					switch (calcStack.peek()) {
-					case "^": case "√": case "v":
+					case "^": case "√": case "v": case"%":
 						precedence = true;
 					case "*": case "/":
 						if (nextToken == '+' || nextToken == '-') {
@@ -69,7 +69,7 @@ public class CalculatorParser {
 
 				if (!calcStack.isEmpty() && (precedence && !calcStack.peek().equals("("))) {
 					// adds high precedence operands to queue
-					addToQueue(calcStack.pop()); // emptys queue if the next
+					addToQueue(calcStack.pop()); // empties queue if the next
 													// operator is a minus or
 													// plus
 					precedence = false; // reset precedence
@@ -88,7 +88,7 @@ public class CalculatorParser {
 				// operator, i.e. the end of the number
 				if(otherOperation>0 && !isfuntion(calcStack.peek())) // need to make sure that the ( is belonging to another function.
 					otherOperation--;
-				
+
 				if (!nextNumber.equalsIgnoreCase("")) {
 					addToQueue(String.valueOf(nextNumber));
 					nextNumber = ""; // reset for the next number
@@ -115,12 +115,15 @@ public class CalculatorParser {
 					addToQueue(calcStack.pop());
 					otherOperation--;
 				}
-				
+
+			} else if(nextToken==FACTORIAL){
+				addToQueue(String.valueOf(factorial(Integer.parseInt(nextNumber))));
+				nextNumber= "";
 			} else if ((nextToken < ZERO || nextToken > NINE)
 					&& (nextToken != MULTIPLY || nextToken != MINUS
-							|| nextToken != PLUS || nextToken != DIVIDE)) {
+							|| nextToken!=MODULUS|| nextToken != PLUS || nextToken != DIVIDE)) {
 				function += nextToken;
-				
+
 				if (isfuntion(function)) {
 					otherOperation+=1;
 					System.out.println(function);
@@ -179,6 +182,7 @@ public class CalculatorParser {
 		case DIVIDE:
 		case POWER:
 		case ROOT:
+		case MODULUS:
 			result = true;
 			break;
 		}
@@ -203,5 +207,11 @@ public class CalculatorParser {
 				addToQueue(calcStack.pop());
 		}
 
+	}
+	public int factorial(int factor){
+		if (factor <= 1)
+		    return 1;
+		else 
+		    return factor * factorial(factor-1);
 	}
 }

@@ -102,7 +102,7 @@ public class CalculatorTest {
 	
 	@Test
 	public void testLogBase2() {
-		assertEquals("3.3219280948873626", calc.calculate("2blog10", true));
+		assertEquals("3.3219280948873626", calc.calculate("2nlog10", true));
 	}
 	
 	@Test

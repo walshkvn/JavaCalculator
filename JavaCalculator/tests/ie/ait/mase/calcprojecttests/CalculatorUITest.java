@@ -68,6 +68,13 @@ public class CalculatorUITest {
 	}
 	
 	@Test
+	public void testnLogButton() {
+		String buttonName = "nlog";
+
+		testOperatorDisplayButtons(buttonName, buttonName);
+	}
+	
+	@Test
 	public void testPlusOperatorButton() {
 		String buttonName = "+";
 

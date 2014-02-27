@@ -12,7 +12,7 @@ public class ReversePolishParser {
 	// Operation Constants
 	private final String PLUS = "+", SUBTRACTION = "-", MULTIPLICATION = "*",
 			DIVISION = "/", POWER = "^", ROOT = "\u221A", SIN="sin", COS="cos" ,TAN="tan",
-			LN = "ln", BLOG = "v", LOG = "log" ; // add more as add functionality
+			LN = "ln", NLOG = "v", LOG = "log", MODULUS = "%" ; // add more as add functionality
 
 	public final double π = Math.PI;
 	public final double e = Math.E;
@@ -38,7 +38,7 @@ public class ReversePolishParser {
 					nextToken=Double.toString(π);
 				if(nextToken.equals("e"))
 						nextToken=Double.toString(e);
-				
+
 				numberStack.add(nextToken);
 			}else {
 				if(nextToken.length()>1){
@@ -67,6 +67,9 @@ public class ReversePolishParser {
 		double result = 0.0;
 
 		switch (nextToken) {
+		case "%":
+			result = calc.modulus(Double.valueOf(num1), Double.valueOf(num2));
+			break;
 		case "+":
 			result = calc.add(Double.valueOf(num1), Double.valueOf(num2));
 			break;
@@ -106,6 +109,10 @@ public class ReversePolishParser {
 		case "v":
 			result = Math.log(Double.valueOf(num2))/Math.log(Double.valueOf(num1));
 			break;
+		default:
+			System.out.println("This operation has not yet been implemented: "
+					+ nextToken);
+			break;
 		}
 
 		return result;
@@ -131,7 +138,8 @@ public class ReversePolishParser {
 		case COS:
 		case LN:
 		case LOG:
-		case BLOG:
+		case NLOG:
+		case MODULUS:
 			result = true;
 			break;
 		}

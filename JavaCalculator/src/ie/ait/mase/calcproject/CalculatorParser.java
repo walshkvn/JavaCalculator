@@ -11,20 +11,33 @@ public class CalculatorParser {
 												// added
 
 	private Queue<String> calcQueue = new LinkedList<String>();
-	private Stack<String> calcStack = new Stack();
+	private Stack<String> calcStack = new Stack<String>();
 	private boolean precedence = false;
 	private int otherOperation = 0;
-	private boolean powerOperation = false;
 	private final double π = Math.PI;
 	private final double e = Math.E;
 	public Queue<String> parse(String calcToParse) {
-
-		String reversePolish = null;
 
 		String function = ""; // Used to store the values of all non number or
 								// operand things
 								// e.g cos, sin, etc.
 
+		// need to replace π
+		if (calcToParse.contains("π")) {
+			char priorChar = ' ';
+			for (int i = 0; i < calcToParse.length(); i++) {
+				if (calcToParse.contains("π")) { // if one replaced check if there are any more
+					if (calcToParse.charAt(i) == 'π') {
+						if (priorChar >= '0' && priorChar <= '9')
+							calcToParse = calcToParse.replaceFirst("π", "*(" + π + ")");
+						else if (priorChar == '-')
+							calcToParse = calcToParse.replaceFirst("π", Double.toString(π));
+					}
+					priorChar = calcToParse.charAt(i);
+				}
+			}
+		}
+		
 		// while there is a token read it
 		String nextNumber = ""; // used to put multiple digits together to form
 								// a full number

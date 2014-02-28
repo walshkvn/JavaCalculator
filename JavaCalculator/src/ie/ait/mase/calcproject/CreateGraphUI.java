@@ -96,7 +96,7 @@ public class CreateGraphUI extends JFrame implements ActionListener{
 		formulaField = new JTextField();
 		formulaField.setBounds(6, 53, 348, 28);
 		plGraph.add(formulaField);
-		formulaField.setColumns(10);
+		formulaField.setColumns(10); 
 		formulaField.setText(problem);
 		
 		JLabel lblEnterTheLower = new JLabel("Enter the lower range to graph:");
@@ -348,11 +348,12 @@ public class CreateGraphUI extends JFrame implements ActionListener{
 				if (isValidForGraphing(formulaField.getText(), lowerLimit.getText(), upperLimit.getText())) {
 
 					XYSeries series1 = new XYSeries(formulaField.getText());
-					double lLimit = Double.parseDouble(lowerLimit.getText());
-					double uLimit = Double.parseDouble(upperLimit.getText());
 					
 					// Need to find the value to replace with the upper and lower limits specified
 					Calculator calc = new Calculator();
+					
+					double lLimit = Double.parseDouble(calc.calculate(lowerLimit.getText().replaceAll("-π", "-1*(π)"), true));
+					double uLimit = Double.parseDouble(calc.calculate(upperLimit.getText(), true));
 					
 					for(double i = lLimit; i <= uLimit; i=i+0.1) {
 						String problem = formulaField.getText().toLowerCase().replaceAll("x", ""+i);
@@ -493,9 +494,9 @@ public class CreateGraphUI extends JFrame implements ActionListener{
 			throw new InvalidAttributesException ("400: Upper Limit is blank");
 		else if (formula.equalsIgnoreCase(""))
 			throw new InvalidAttributesException ("200: Problem to solve is blank");
-		else if (!lowerLimit.matches("-?\\d+")) // a minus and one or more digits
+		else if (!lowerLimit.matches("-?.?π?\\d*")) // a minus and one or more digits
 			throw new InvalidAttributesException ("310: Lower limit is not a number");
-		else if (!lowerLimit.matches("-?\\d+")) // a minus and one or more digits
+		else if (!lowerLimit.matches("-?.?π?\\d*")) // a minus and one or more digits
 			throw new InvalidAttributesException ("410: Upper limit is not a number");
 		
 		// check the formula contains an entity to apply to the limits

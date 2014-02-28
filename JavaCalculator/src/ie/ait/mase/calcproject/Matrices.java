@@ -1,9 +1,8 @@
 package ie.ait.mase.calcproject;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
-public class Matrices {
+public class Matrices { 
 
 	private int rowsA, rowsB, columnsA, columnsB;
 	private boolean validMatrices = false;

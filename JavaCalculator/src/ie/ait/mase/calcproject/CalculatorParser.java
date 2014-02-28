@@ -15,7 +15,6 @@ public class CalculatorParser {
 	private boolean precedence = false;
 	private int otherOperation = 0;
 	private final double π = Math.PI;
-	private final double e = Math.E;
 	public Queue<String> parse(String calcToParse) {
 
 		String function = ""; // Used to store the values of all non number or

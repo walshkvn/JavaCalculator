@@ -129,7 +129,7 @@ public class CalculatorUITest {
 		
 		clickButton("4");
 		
-		clickButton("+/-");
+		clickButton(buttonName);
 		assertEquals("-4", field.getText());
 	}
 	

@@ -4,22 +4,22 @@ import java.awt.*;
 
 import javax.naming.directory.InvalidAttributesException;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.jfree.chart.*;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-
 import javax.swing.border.LineBorder;
 
 
 public class CreateGraphUI extends JFrame implements ActionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6592225535558202635L;
+	
 	private JPanel contentPane;
 	private JTextField formulaField;
 	private JTextField lowerLimit;
